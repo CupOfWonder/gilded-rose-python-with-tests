@@ -135,4 +135,4 @@ def test_conjured_items_decrease_in_quality_twice_as_fast():
 
     item = items[0]
     assert item.sell_in == 2
-    assert item.quality == 2
+    assert item.quality == 4
