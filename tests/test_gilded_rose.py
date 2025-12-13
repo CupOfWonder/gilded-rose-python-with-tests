@@ -127,12 +127,16 @@ def test_quality_does_not_increase_past_50():
     assert item.quality == 50
 
 
-@pytest.mark.skip(reason="TODO: implement conjured rule")
 def test_conjured_items_decrease_in_quality_twice_as_fast():
-    items = [Item("Conjured Mana Cake", 3, 6)]
+    items = [Item("Conjured Mana Cake", 3, 6), Item("Conjured Fresh Water", 0, 10)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
 
-    item = items[0]
-    assert item.sell_in == 2
-    assert item.quality == 4
+    cake = items[0]
+    assert cake.sell_in == 2
+    assert cake.quality == 4
+    
+    water = items[1]
+    assert water.sell_in == -1
+    assert water.quality == 6
+    
