@@ -1,9 +1,7 @@
 import pytest
 
-from item import Item
+from gilded_rose import Item
 from gilded_rose import GildedRose
-
-
 
 def test_regular_items_decrease_by_one():
     items = [Item("+5 Dexterity Vest", 10, 20)]
