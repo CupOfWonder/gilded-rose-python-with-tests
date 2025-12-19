@@ -80,7 +80,7 @@ def test_quality_goes_up_by_three_for_backstage_products_with_5_days_or_less_lef
     "name,sell_in,quality,expected_sell_in,expected_quality",
     [
         ("+5 Dexterity Vest", 0, 20, -1, 18),
-        ("Conjured Mana Cake", 0, 6, -1, 4),
+        ("Mana Cake", 0, 6, -1, 4),
     ],
 )
 def test_quality_and_sellin_decrease_twice_as_fast_after_sell_by(
@@ -132,7 +132,6 @@ def test_quality_does_not_increase_past_50():
     assert item.sell_in == 3
     assert item.quality == 50
 
-@pytest.mark.skip(reason="TODO: implement conjured rule")
 def test_conjured_items_decrease_in_quality_twice_as_fast():
     items = [Item("Conjured Mana Cake", 3, 6), Item("Conjured Fresh Water", 0, 10)]
     gilded_rose = GildedRose(items)
