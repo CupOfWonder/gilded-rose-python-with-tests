@@ -14,6 +14,14 @@ def test_regular_items_decrease_by_one():
     assert item.sell_in == 9
     assert item.quality == 19
 
+def test_item_quality_never_get_negative():
+    items = [Item("+5 Dexterity Vest", 10, 0)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+
+    item = items[0]
+    assert item.sell_in == 9
+    assert item.quality == 0
 
 @pytest.mark.parametrize(
     "name,sell_in,quality,expected_sell_in,expected_quality",
