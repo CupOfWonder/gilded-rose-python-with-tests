@@ -80,7 +80,7 @@ def test_quality_goes_up_by_three_for_backstage_products_with_5_days_or_less_lef
     "name,sell_in,quality,expected_sell_in,expected_quality",
     [
         ("+5 Dexterity Vest", 0, 20, -1, 18),
-        ("Conjured Mana Cake", 0, 6, -1, 4),
+        ("Mana Cake", 0, 6, -1, 4),
     ],
 )
 def test_quality_and_sellin_decrease_twice_as_fast_after_sell_by(
