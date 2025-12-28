@@ -75,6 +75,24 @@ def test_quality_goes_up_by_three_for_backstage_products_with_5_days_or_less_lef
     assert item.sell_in == expected_sell_in
     assert item.quality == expected_quality
 
+@pytest.mark.parametrize(
+    "name,sell_in,quality,expected_sell_in,expected_quality",
+    [
+        ("Backstage passes to a TAFKAL80ETC concert", 8, 49, 7, 50),
+        ("Backstage passes to a TAFKAL80ETC concert", 4, 48, 3, 50),
+    ],
+)
+def test_quality_for_backstage_products_never_gets_more_than_50(
+    name, sell_in, quality, expected_sell_in, expected_quality
+):
+    items = [Item(name, sell_in, quality)]
+    gilded_rose = GildedRose(items)
+    gilded_rose.update_quality()
+
+    item = items[0]
+    assert item.sell_in == expected_sell_in
+    assert item.quality == expected_quality
+
 
 @pytest.mark.parametrize(
     "name,sell_in,quality,expected_sell_in,expected_quality",
