@@ -122,22 +122,24 @@ def test_sulfuras_the_immutable():
     assert item.sell_in == 0
     assert item.quality == 80
 
-
-def test_quality_does_not_increase_past_50():
-    items = [
-        Item("Aged Brie", 4, 50),
-        Item("Backstage passes to a TAFKAL80ETC concert", 7, 49),
-        Item("Backstage passes to a TAFKAL80ETC concert", 3, 48),
-    ]
+@pytest.mark.parametrize(
+    "name,sell_in,quality,expected_sell_in,expected_quality",
+    [
+        ("Aged Brie", 4, 50, 3, 50),
+        ("Backstage passes to a TAFKAL80ETC concert", 7, 49, 6, 50),
+        ("Backstage passes to a TAFKAL80ETC concert", 3, 48, 2, 50),
+    ],
+)
+def test_quality_does_not_increase_past_50(
+    name, sell_in, quality, expected_sell_in, expected_quality
+):
+    items = [Item(name, sell_in, quality)]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
 
-    assert items[0].sell_in == 3
-    assert items[0].quality == 50
-    assert items[1].sell_in == 6
-    assert items[1].quality == 50
-    assert items[2].sell_in == 2
-    assert items[2].quality == 50
+    item = items[0]
+    assert item.sell_in == expected_sell_in
+    assert item.quality == expected_quality
 
 @pytest.mark.skip(reason="TODO: implement conjured rule")
 def test_conjured_items_decrease_in_quality_twice_as_fast():
