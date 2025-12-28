@@ -75,24 +75,6 @@ def test_quality_goes_up_by_three_for_backstage_products_with_5_days_or_less_lef
     assert item.sell_in == expected_sell_in
     assert item.quality == expected_quality
 
-@pytest.mark.parametrize(
-    "name,sell_in,quality,expected_sell_in,expected_quality",
-    [
-        ("Backstage passes to a TAFKAL80ETC concert", 8, 49, 7, 50),
-        ("Backstage passes to a TAFKAL80ETC concert", 4, 48, 3, 50),
-    ],
-)
-def test_quality_for_backstage_products_never_gets_more_than_50(
-    name, sell_in, quality, expected_sell_in, expected_quality
-):
-    items = [Item(name, sell_in, quality)]
-    gilded_rose = GildedRose(items)
-    gilded_rose.update_quality()
-
-    item = items[0]
-    assert item.sell_in == expected_sell_in
-    assert item.quality == expected_quality
-
 
 @pytest.mark.parametrize(
     "name,sell_in,quality,expected_sell_in,expected_quality",
@@ -142,13 +124,20 @@ def test_sulfuras_the_immutable():
 
 
 def test_quality_does_not_increase_past_50():
-    items = [Item("Aged Brie", 4, 50)]
+    items = [
+        Item("Aged Brie", 4, 50),
+        Item("Backstage passes to a TAFKAL80ETC concert", 7, 49),
+        Item("Backstage passes to a TAFKAL80ETC concert", 3, 48),
+    ]
     gilded_rose = GildedRose(items)
     gilded_rose.update_quality()
 
-    item = items[0]
-    assert item.sell_in == 3
-    assert item.quality == 50
+    assert items[0].sell_in == 3
+    assert items[0].quality == 50
+    assert items[1].sell_in == 6
+    assert items[1].quality == 50
+    assert items[2].sell_in == 2
+    assert items[2].quality == 50
 
 @pytest.mark.skip(reason="TODO: implement conjured rule")
 def test_conjured_items_decrease_in_quality_twice_as_fast():
